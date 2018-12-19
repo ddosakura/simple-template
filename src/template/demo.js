@@ -35,6 +35,7 @@ var JTemp = function () {
             str_ += 'f+=\'' + str + '\';';
             str_ = str_.replace(/\n/g, ''); //处理换行
             var fs = str_ + 'return f;';
+            console.log(fs)
             this.fun = Function(fs);
         },
         build: function (p) {

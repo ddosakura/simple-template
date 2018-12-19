@@ -1,4 +1,57 @@
-<div dsst:for='{{list}}'>
-    <h1 class="title">${item.title}</h1>
-    <p>${item.content}</p>
-</div>
+<dsst if='show'>
+    <div>TITLE SHOW=${show} SUB-SHOW=${subShow} 1</div>
+    <div>--------------</div>
+</dsst>
+<dsst elif='subShow'>
+    <div>TXXXX SHOW=${show} SUB-SHOW=${subShow} 2</div>
+</dsst>
+<dsst else>
+    <div>XXXXX SHOW=${show} SUB-SHOW=${subShow} 3</div>
+</dsst>
+
+<hr />
+
+<dsst if='show'>
+    <div>TITLE SHOW=${show} SUB-SHOW=${subShow}</div>
+    <dsst if='subShow'>
+        <div>TXXXX SHOW=${show} SUB-SHOW=${subShow}</div>
+    </dsst>
+</dsst>
+
+<dsst for='list'>
+    <h1 class='title'>${ item.title }</h1>
+    <p>${ item.content }</p>
+    <p>use as \${ item.title }</p>
+    <p>use as \${ item.content }</p>
+
+    <dsst if='subShow'>
+        <div>TITLE SHOW=${show} SUB-SHOW=${subShow}</div>
+    </dsst>
+</dsst>
+
+<dsst if='show'>
+    <dsst for='list2[0]'>
+        <p>${ item }</p>
+    </dsst>
+    <dsst for='list2[1]'>
+        <p>${ item }</p>
+    </dsst>
+</dsst>
+
+<hr />
+
+<dsst for='list2'>
+    <p>index ${index}</p>
+    <dsst for='list2[${index}]'>
+        <p>${ item }</p>
+        <!-- can't do this !!! -->
+        <!--
+        <dsst if='item'>
+            <div>YYYYYY</div>
+        </dsst>
+        <dsst else>
+            <div>XXXXXX</div>
+        </dsst>
+        -->
+    </dsst>
+</dsst>

@@ -18,4 +18,14 @@ $$('#template-target2').loadTemplate('/t2/t2', {
             content: 'Good Bye! * 10',
         },
     ],
+    show: true,
+    subShow: true,
+    list2: [
+        [
+            1111, false
+        ],
+        [
+            3333, 4444
+        ]
+    ]
 })
