@@ -1,0 +1,6 @@
+@import url("../templates/t1/t1.css");
+@import url("../templates/t2/t2.css");
+
+.dsst-debug {
+    color: red;
+}

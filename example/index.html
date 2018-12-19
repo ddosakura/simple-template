@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Example</title>
+    <link rel='stylesheet' href='/example/styles/master.css'>
+    <script src='/dist/dsst.min.js'></script>
+    <script>
+        DSST.global()
+        $$.debug = true
+        $$.baseURL = '/example/'
+    </script>
+    <script src='/example/scripts/mock.js'></script>
+    <script defer src='/example/scripts/template.js'></script>
+</head>
+
+<body>
+    <div id='template-target'></div>
+    <div class="t-t1-t1">
+        <span class="title">123</span>
+    </div>
+    <div class="t-t2-t2">
+        <div class="t-t1-t1">
+            <span class="title">456</span>
+        </div>
+    </div>
+    <template id='dsst-a'>
+        <p>${title}-${content}</p>
+    </template>
+    <div id='template-target1'></div>
+    <div id='template-target2'></div>
+</body>
+
+</html>
