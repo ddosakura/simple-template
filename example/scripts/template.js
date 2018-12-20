@@ -25,7 +25,7 @@ $$('#template-target2').loadTemplate('/t2/t2', {
             1111, false
         ],
         [
-            3333, 4444
+            0, 44.44
         ]
     ]
 })

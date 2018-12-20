@@ -31,9 +31,23 @@ export function loadTemplate(URLName, data) {
         return true
     }
 
+    // quick fix by eval
+    const evalVal = (attr) => {
+        const temp = '`' + attr + '`'
+        console.log('evalVal', attr, temp)
+        const script = temp.replace(/[^\\]\${\s*/g, '$&data.')
+        console.log('script', script)
+        const ret = eval(script)
+        console.log(ret)
+        return ret
+    }
+
     const renderIf = (t, attr) => {
         // console.log(`data.${attr}`, attr === true ? null : eval(`data.${attr}`))
-        if (attr === true || eval(`data.${attr}`)) {
+        const isNum = /^((\d+(\.\d+)?)|(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))))$/.test(attr)
+        if (attr === true ||
+            isNum && parseFloat(attr) ||
+            !isNum && eval(`data.${attr}`)) {
             const c = t.children()
             const ts = []
             for (let i = 0; i < c.length; i++) {
@@ -59,7 +73,8 @@ export function loadTemplate(URLName, data) {
             if (tag > 1) {
                 throw new Error('you can only set one of if/elif/else/for in <dsst>')
             }
-            renderIf(nextT, attrElif ? attrElif : true)
+            // quick fix by eval
+            renderIf(nextT, evalVal(attrElif ? attrElif : true))
         }
     }
 
@@ -120,7 +135,8 @@ export function loadTemplate(URLName, data) {
                 if (/((\${\s*index\s*})|(\${\s*item))/.test(attrIf)) {
                     continue
                 }
-                renderIf(t, attrIf)
+                // quick fix by eval
+                renderIf(t, evalVal(attrIf))
                 t.remove()
                 let continueRemove = removeEl($(dsst[++index]))
                 while (continueRemove) continueRemove = removeEl($(dsst[++index]))
@@ -144,7 +160,8 @@ export function loadTemplate(URLName, data) {
                 if (/((\${\s*index\s*})|(\${\s*item))/.test(attrFor)) {
                     continue
                 }
-                renderFor(t, attrFor)
+                // quick fix by eval
+                renderFor(t, evalVal(attrFor))
                 // waitRemove.push(t)
                 t.remove()
                 console.log('after', window.clone.html())
@@ -165,10 +182,12 @@ export function loadTemplate(URLName, data) {
         let doDSST = 1
 
         console.log('------------------------------------------')
+        // TODO: remove times limit
         let times = 0
-        while (doDSST > 0 && times++ < 2) {
+        while (doDSST > 0 && times++ < 6) {
             const ttt = temp.find('dsst')
             console.log('ttt', ttt)
+            // TODO: render policy by dom
             doDSST = renderDSST(ttt)
         }
         console.log(times)
